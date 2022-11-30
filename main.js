@@ -1,4 +1,5 @@
-const newBook = document.querySelector('#btn-new-book');
+const newBookBtn = document.querySelector('#btn-new-book');
+const newBookModal = document.querySelector('.new-book-modal')
 
 let myLibrary = [];
 
@@ -16,6 +17,10 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+Book.prototype.displayBook = function() {
+
+}
+
 function addBookToLibrary(e) {
   e.preventDefault();
 }
@@ -25,7 +30,7 @@ function displayLibrary() {
 }
 
 // new book button
-newBook.addEventListener('click', _, false);
+newBookBtn.addEventListener('click', () => { newBookModal.style.display = "block"; }, false);
 
 
 // Sample Library
