@@ -26,6 +26,7 @@ function Book(title, author, pages, completed) {
 
 Book.prototype.displayBook = function() {
   const bookCard = document.createElement('div');
+  bookCard.dataset.name = `${this.title}`;
   libraryDisplay.appendChild(bookCard);
 
   const bookTitle = document.createElement('h2');
@@ -44,6 +45,17 @@ Book.prototype.displayBook = function() {
   if (this.completed) bookCompleted.innerHTML ='Completed';
   else bookCompleted.innerHTML = 'To be read';
   bookCard.appendChild(bookCompleted);
+
+  const removeBookBtn = document.createElement('button');
+  removeBookBtn.innerHTML = 'Remove Book';
+  bookCard.appendChild(removeBookBtn);
+  removeBookBtn.addEventListener('click', this.removeBook);
+}
+
+Book.prototype.removeBook = function() {
+  libraryDisplay.removeChild(this.parentElement);
+  let indexToRemove = myLibrary.findIndex(element => element.title === this.parentElement.dataset.name);
+  myLibrary.splice(indexToRemove, 1);
 }
 
 function addBookToLibrary(e) {
@@ -84,3 +96,6 @@ myLibrary.push(bhagavadGita, newTestament, holyQuran);
 
 // Initialize
 displayLibrary();
+
+// TODO:
+// Button to mark book completed
