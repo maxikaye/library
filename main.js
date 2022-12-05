@@ -48,7 +48,6 @@ Book.prototype.displayBook = function() {
 
 function addBookToLibrary(e) {
   e.preventDefault();
-  // get form input as Book obj, add to myLibrary[]
   let newBook = new Book(
     inputBookTitle.value,
     inputBookAuthor.value,
@@ -56,8 +55,8 @@ function addBookToLibrary(e) {
     inputBookCompleted.checked
   );
   myLibrary.push(newBook);
+  newBook.displayBook();
   clearFormAndClose();
-  displayLibrary();
 }
 
 function clearFormAndClose() {
@@ -69,7 +68,6 @@ function clearFormAndClose() {
 }
 
 function displayLibrary() {
-    // TODO: clear existing content from page
     for (let item in myLibrary) {
         myLibrary[item].displayBook();
     }
