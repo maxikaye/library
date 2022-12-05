@@ -1,7 +1,12 @@
 const newBookBtn = document.querySelector('#btn-new-book');
-const newBookModal = document.querySelector('.new-book-modal')
+const newBookModal = document.querySelector('.new-book-modal');
+const newBookForm = document.querySelector('#new-book-form');
 const addBookBtn = document.querySelector('#btn-add-book');
 const libraryDisplay = document.querySelector('.library-display');
+const inputBookTitle = document.getElementById('book-title');
+const inputBookAuthor = document.getElementById('book-author');
+const inputBookPages = document.getElementById('book-page-count');
+const inputBookCompleted = document.getElementById('book-completed');
 
 let myLibrary = [];
 
@@ -42,11 +47,29 @@ Book.prototype.displayBook = function() {
 }
 
 function addBookToLibrary(e) {
-  console.table(e);
   e.preventDefault();
+  // get form input as Book obj, add to myLibrary[]
+  let newBook = new Book(
+    inputBookTitle.value,
+    inputBookAuthor.value,
+    inputBookPages.value,
+    inputBookCompleted.checked
+  );
+  myLibrary.push(newBook);
+  clearFormAndClose();
+  displayLibrary();
+}
+
+function clearFormAndClose() {
+  inputBookTitle.value = "";
+  inputBookAuthor.value = "";
+  inputBookPages.value = 0;
+  inputBookCompleted.checked = false;
+  newBookModal.style.display = "none";
 }
 
 function displayLibrary() {
+    // TODO: clear existing content from page
     for (let item in myLibrary) {
         myLibrary[item].displayBook();
     }
@@ -61,5 +84,5 @@ const newTestament = new Book('The New Testament from Peshitta Aramaic', 'Georga
 const holyQuran = new Book('The Holy Quaran', 'Mohammed', 292, false);
 myLibrary.push(bhagavadGita, newTestament, holyQuran);
 
-// Build
+// Initialize
 displayLibrary();
