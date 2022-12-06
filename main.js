@@ -24,6 +24,19 @@ function Book(title, author, pages, completed) {
   this.completed = completed;
 }
 
+Book.prototype.removeBook = function() {
+  libraryDisplay.removeChild(this.parentElement);
+  let indexToRemove = myLibrary.findIndex(element => element.title === this.parentElement.dataset.name);
+  myLibrary.splice(indexToRemove, 1);
+}
+
+Book.prototype.markCompleted = function() {
+  this.completed = true;
+  const bookCompleted = this.parentElement.querySelector('.book-completed');
+  bookCompleted.innerHTML = "Completed";
+  this.parentElement.removeChild(this);
+}
+
 Book.prototype.displayBook = function() {
   const bookCard = document.createElement('div');
   bookCard.dataset.name = `${this.title}`;
@@ -41,7 +54,15 @@ Book.prototype.displayBook = function() {
   bookPages.innerHTML = `${this.pages} pages`;
   bookCard.appendChild(bookPages);
 
+  if (!this.completed) {
+    const completedBtn = document.createElement('button');
+    completedBtn.innerHTML = 'Completed?';
+    bookCard.appendChild(completedBtn);
+    completedBtn.addEventListener('click', this.markCompleted);
+  }
+
   const bookCompleted = document.createElement('p');
+  bookCompleted.classList.add('book-completed');
   if (this.completed) bookCompleted.innerHTML ='Completed';
   else bookCompleted.innerHTML = 'To be read';
   bookCard.appendChild(bookCompleted);
@@ -50,12 +71,6 @@ Book.prototype.displayBook = function() {
   removeBookBtn.innerHTML = 'Remove Book';
   bookCard.appendChild(removeBookBtn);
   removeBookBtn.addEventListener('click', this.removeBook);
-}
-
-Book.prototype.removeBook = function() {
-  libraryDisplay.removeChild(this.parentElement);
-  let indexToRemove = myLibrary.findIndex(element => element.title === this.parentElement.dataset.name);
-  myLibrary.splice(indexToRemove, 1);
 }
 
 function addBookToLibrary(e) {
@@ -96,6 +111,3 @@ myLibrary.push(bhagavadGita, newTestament, holyQuran);
 
 // Initialize
 displayLibrary();
-
-// TODO:
-// Button to mark book completed
