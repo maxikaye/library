@@ -1,3 +1,7 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 h1 {
     font-size: 2rem;
 }
@@ -11,7 +15,7 @@ h2 {
 }
 
 header {
-    padding: 20px 0 12px 20px;
+    padding: 20px 0 18px 24px;
     background-color: #777;
     color: #eee;
 }

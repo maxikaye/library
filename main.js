@@ -75,7 +75,6 @@ Book.prototype.displayBook = function() {
 
 function addBookToLibrary(e) {
   e.preventDefault();
-  // VALIDATE FIELDS are not empty
   let newBook = new Book(
     inputBookTitle.value,
     inputBookAuthor.value,
