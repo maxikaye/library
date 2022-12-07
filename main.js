@@ -32,9 +32,10 @@ Book.prototype.removeBook = function() {
 
 Book.prototype.markCompleted = function() {
   this.completed = true;
-  const bookCompleted = this.parentElement.querySelector('.book-completed');
+  const bookCompleted = this.parentElement.querySelector('.book-incomplete');
+  bookCompleted.classList.remove('book-incomplete');
+  bookCompleted.classList.add('book-completed');
   bookCompleted.innerHTML = "Completed";
-  this.parentElement.removeChild(this);
 }
 
 Book.prototype.displayBook = function() {
@@ -54,27 +55,27 @@ Book.prototype.displayBook = function() {
   bookPages.innerHTML = `${this.pages} pages`;
   bookCard.appendChild(bookPages);
 
-  if (!this.completed) {
-    const completedBtn = document.createElement('button');
-    completedBtn.innerHTML = 'Completed?';
-    bookCard.appendChild(completedBtn);
-    completedBtn.addEventListener('click', this.markCompleted);
-  }
-
   const bookCompleted = document.createElement('p');
-  bookCompleted.classList.add('book-completed');
-  if (this.completed) bookCompleted.innerHTML ='Completed';
-  else bookCompleted.innerHTML = 'To be read';
+ 
+  if (!this.completed) {
+    bookCompleted.innerHTML = 'To be read';
+    bookCompleted.classList.add('book-incomplete');
+    bookCompleted.addEventListener('click', this.markCompleted);
+  } else {
+    bookCompleted.innerHTML ='Completed';
+    bookCompleted.classList.add('book-completed');
+  }
   bookCard.appendChild(bookCompleted);
 
   const removeBookBtn = document.createElement('button');
-  removeBookBtn.innerHTML = 'Remove Book';
+  removeBookBtn.classList.add('btn-remove-book');
   bookCard.appendChild(removeBookBtn);
   removeBookBtn.addEventListener('click', this.removeBook);
 }
 
 function addBookToLibrary(e) {
   e.preventDefault();
+  // VALIDATE FIELDS are not empty
   let newBook = new Book(
     inputBookTitle.value,
     inputBookAuthor.value,
@@ -100,7 +101,10 @@ function displayLibrary() {
     }
 }
 
-newBookBtn.addEventListener('click', () => { newBookModal.style.display = "block"; });
+newBookBtn.addEventListener('click', () => { newBookModal.style.display = 'block'; });
+libraryDisplay.addEventListener('click', () => {
+  if (newBookModal.style.display === 'block') clearFormAndClose();
+})
 addBookBtn.addEventListener('click', addBookToLibrary, false);
 
 // Sample Library ============================================================
