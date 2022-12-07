@@ -73,6 +73,7 @@ header {
 
 .book-incomplete {
     cursor: pointer;
+    padding: 4px 0;
     background-color: rgb(164, 50, 50);
     color: #fff;
     text-align: center;
